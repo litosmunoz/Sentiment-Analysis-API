@@ -14,10 +14,47 @@ def get_average ():
     df = pd.read_sql_query(query, engine)
     return df.to_dict(orient="records")
 
-def insert_one_row (day, month, year, Cleaned_Tweets, Retweets, Likes):
+def get_tweets_per_month(): 
+    query = (f"""SELECT month_, COUNT(Tweets) AS 'Tweets'
+    FROM elon_tweets
+    GROUP BY month_
+    ORDER BY STR_TO_DATE(CONCAT(year_, month_, day_), '%%Y %%M %%d');""")
+    df=pd.read_sql_query(query,con=engine)
+    return df.to_dict(orient='records')
+
+def get_likes_per_month():
+    query = (f"""SELECT month_, SUM(Likes) AS 'Likes'
+    FROM elon_tweets
+    GROUP BY month_
+    ORDER BY STR_TO_DATE(CONCAT(year_, month_, day_), '%%Y %%M %%d');""")
+    df=pd.read_sql_query(query,con=engine)
+    return df.to_dict(orient='records')
+
+def get_retweets_per_month():
+    query = (f"""SELECT month_, SUM(Retweets) AS 'Retweets'
+    FROM elon_tweets
+    GROUP BY month_
+    ORDER BY STR_TO_DATE(CONCAT(year_, month_, day_), '%%Y %%M %%d');""")
+    df=pd.read_sql_query(query,con=engine)
+    return df.to_dict(orient='records')
+    
+def get_random_tweet():
+    query = (f"""SELECT Tweets FROM elon_tweets""")
+    df=pd.read_sql_query(query,con=engine)
+    index = random.choice(range(0, 2268))
+    return df.iloc[[index]]        
+
+def get_wordcloud(): 
+    query = (f"""SELECT Tweets FROM elon_tweets""")
+    df=pd.read_sql_query(query,con=engine)
+    return df.to_dict(orient='records')     
+
+
+## POST
+def insert_one_row (day_, month_, year_, Tweets, Likes, Retweets):
     query = f"""INSERT INTO elon_tweets
-     (day, month, year, Cleaned_Tweets, Retweets, Likes) 
-        VALUES ('{day}''{month}''{year}', '{Cleaned_Tweets}', '{Retweets}', '{Likes}');
+     (day_, month_, year_, Tweets, Likes, Retweets) 
+        VALUES ('{day_}', '{month_}', '{year_}', '{Tweets}', '{Likes}', '{Retweets}');
     """
     engine.execute(query)
     return f"Correctly introduced!"
