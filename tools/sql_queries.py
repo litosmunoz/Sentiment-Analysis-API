@@ -1,6 +1,7 @@
 from config.sql_connection import engine
 import pandas as pd
 import random
+import numpy as np
 
 
 ## GET
@@ -43,7 +44,14 @@ def get_retweets_per_month():
     ORDER BY STR_TO_DATE(CONCAT(year_, month_, day_), '%%Y %%M %%d');""")
     df=pd.read_sql_query(query,con=engine)
     return df.to_dict(orient='records')
-    
+
+def get_tweets_in_a_specific_month (month_):
+    query = f"""SELECT Tweets 
+    FROM elon_tweets
+    WHERE month_ = '{month_}';"""
+    df = pd.read_sql_query(query, engine)
+    return df.to_dict(orient="records")
+   
 def get_random_tweet():
     query = (f"""SELECT Tweets FROM elon_tweets""")
     df=pd.read_sql_query(query,con=engine)
@@ -52,6 +60,11 @@ def get_random_tweet():
 
 def get_sentiment_for_top10_liked_tweets(): 
     query = (f"""SELECT Tweets FROM elon_tweets order by Likes DESC LIMIT 10;""")
+    df=pd.read_sql_query(query,con=engine)
+    return df.to_dict(orient='records')
+
+def get_sentiment_for_top_20_retweeted_tweets():
+    query = (f"""SELECT Tweets FROM elon_tweets order by Retweets DESC LIMIT 20;""")
     df=pd.read_sql_query(query,con=engine)
     return df.to_dict(orient='records')
 

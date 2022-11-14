@@ -40,17 +40,28 @@ Remember, YOU (your API) are the server, and clients send GET or POST requests t
 
     http://localhost:5000/summary
 
-## 6 - Endpoint route to get polarity score for one random tweet:
+
+## 6 - Endpoint route to get Tweets from a specific month (in this case January):
+
+    http://localhost:5000/tweets/1
+
+
+## 7 - Endpoint route to get polarity score for one random tweet:
 
     http://localhost:5000/sentiment/random    
 
 
-## 7 - Endpoint route to get polarity score for the top 10 most liked tweets: 
+## 8 - Endpoint route to get polarity score for the top 10 most liked tweets: 
 
-    http://localhost:5000/sentiment/tweets/top10    
+    http://localhost:5000/sentiment/likes/top10    
 
 
-## 8 - Endpoint route for posting a new tweet:
+## 9 - Endpoint route to get polarity score for the top 20 most retweeted tweets: 
+
+    http://localhost:5000/sentiment/rt/top20    
+    
+
+## 10 - Endpoint route for posting a new tweet:
  
     http://localhost:5000/post    
 

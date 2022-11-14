@@ -54,6 +54,11 @@ def summary_stats():
     }
     return jsonify(result)    
 
+# Get Tweets from a specific month
+@app.route("/tweets/<month_>")
+def monthly_tweets (month_):
+    return jsonify(esecuele.get_tweets_in_a_specific_month(month_))
+
 # Get polarity score for one random tweet
 @app.route("/sentiment/random")
 def get_sentiment_one_random():
@@ -73,9 +78,21 @@ def get_sentiment_one_random():
 
 
 # Get polarity score for top 10 Tweets with more likes
-@app.route("/sentiment/tweets/top10")    
+@app.route("/sentiment/likes/top10")    
 def get_sentiment_liked_tweets():
     df= esecuele.get_sentiment_for_top10_liked_tweets()
+    nltk.downloader.download('vader_lexicon')
+    sia = SentimentIntensityAnalyzer()
+    dict_ = {}
+
+    for i in df:
+        dict_[i["Tweets"]] = sia.polarity_scores(i["Tweets"])["compound"]
+    return dict_
+
+# Get polarity score for top 20 Tweets with more RT
+@app.route("/sentiment/rt/top20")    
+def get_sentiment_retweeted_tweets():
+    df= esecuele.get_sentiment_for_top_20_retweeted_tweets()
     nltk.downloader.download('vader_lexicon')
     sia = SentimentIntensityAnalyzer()
     dict_ = {}
