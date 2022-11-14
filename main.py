@@ -10,8 +10,6 @@ import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.corpus import stopwords
 import statistics as st
-from wordcloud import wordcloud
-import spacy
 
 app = Flask(__name__)
 
@@ -27,6 +25,11 @@ def index():
 def all_tweets ():
     print("These are all the tweets from the database:")
     return jsonify(esecuele.get_everything())
+
+#Get total nº of tweets
+@app.route('/total/tweets')
+def total_tweets():
+    return jsonify(esecuele.get_all_tweets())
 
 # Get average likes and retweets
 @app.route("/average")
@@ -65,6 +68,21 @@ def get_sentiment_one_random():
     df["polarity_score"] = df["Tweets"].apply(sa)
 
     return jsonify(df.to_dict(orient='records'))
+
+
+# Get polarity score for top 10 Tweets with more likes
+@app.route("/sentiment/tweets/top10")    
+def get_sentiment_liked_tweets():
+    df= esecuele.get_sentiment_for_top10_liked_tweets()
+    nltk.downloader.download('vader_lexicon')
+    sia = SentimentIntensityAnalyzer()
+    tweets=[]
+    sentiment=[]
+    my_dict= {}
+
+    return jsonify([sia.polarity_scores(i["Tweets"])["compound"] for i in df])
+    
+
 
 # POST a new entry into the DB 
 @app.route("/post", methods=['POST'])
