@@ -78,7 +78,12 @@ def get_sentiment_liked_tweets():
     df= esecuele.get_sentiment_for_top10_liked_tweets()
     nltk.downloader.download('vader_lexicon')
     sia = SentimentIntensityAnalyzer()
-    return jsonify([sia.polarity_scores(i["Tweets"])["compound"] for i in df])
+    dict_ = {}
+
+    for i in df:
+        dict_[i["Tweets"]] = sia.polarity_scores(i["Tweets"])["compound"]
+    return dict_
+
     
 # POST a new entry into the DB 
 @app.route("/post", methods=['POST'])
