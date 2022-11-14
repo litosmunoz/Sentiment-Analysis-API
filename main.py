@@ -1,15 +1,17 @@
-from tokenize import Name
-from flask import Flask, request, jsonify
-import random
-import tools.sql_queries as esecuele
 import json
-import pandas as pd
+import random
+import statistics as st
 from os import name
+from tokenize import Name
+
 import markdown.extensions.fenced_code
 import nltk
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import pandas as pd
+from flask import Flask, jsonify, request
 from nltk.corpus import stopwords
-import statistics as st
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+import tools.sql_queries as esecuele
 
 app = Flask(__name__)
 
@@ -76,14 +78,8 @@ def get_sentiment_liked_tweets():
     df= esecuele.get_sentiment_for_top10_liked_tweets()
     nltk.downloader.download('vader_lexicon')
     sia = SentimentIntensityAnalyzer()
-    tweets=[]
-    sentiment=[]
-    my_dict= {}
-
     return jsonify([sia.polarity_scores(i["Tweets"])["compound"] for i in df])
     
-
-
 # POST a new entry into the DB 
 @app.route("/post", methods=['POST'])
 def insert_row ():
@@ -101,4 +97,4 @@ def insert_row ():
 
 #this will check that the name is the main
 if __name__ == '__main__': 
-    app.run(port=9000, debug=True)
+    app.run(port=5000, debug=True)

@@ -9,16 +9,16 @@ def get_everything ():
     df = pd.read_sql_query(query, engine)
     return df.to_dict(orient="records")
 
+def get_all_tweets():
+    query = (f"""SELECT count(Tweets) as 'Total Tweets' FROM elon_tweets""")
+    df=pd.read_sql_query(query,con=engine)
+    return df.to_dict(orient='records')
+
 def get_average ():
     query = f"""SELECT AVG(Likes), AVG(Retweets) 
     FROM elon_tweets;"""
     df = pd.read_sql_query(query, engine)
     return df.to_dict(orient="records")
-
-def get_all_tweets():
-    query = (f"""SELECT count(Tweets) as 'Total Tweets' FROM elon_tweets""")
-    df=pd.read_sql_query(query,con=engine)
-    return df.to_dict(orient='records')
 
 def get_tweets_per_month(): 
     query = (f"""SELECT month_, COUNT(Tweets) AS 'Tweets'

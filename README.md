@@ -15,22 +15,22 @@ Remember, YOU (your API) are the server, and clients send GET or POST requests t
 - Read and serve data from the chats database using different endpoints.
 
 ## 1 - Main Endpoint page for the API query:
-    http://localhost:9000/
+    http://localhost:5000/
 
 
 ## 2 - Endpoint route to get all the tweets:
 
-    http://localhost:9000/all
+    http://localhost:5000/all
 
 
-## 4 - Endpoint route to get total number of tweets: 
+## 3 - Endpoint route to get total number of tweets: 
 
-    http://localhost:9000/total/tweets
+    http://localhost:5000/total/tweets
 
 
-## 3 - Endpoint route to get the average number of Likes and Retweets per tweet:
+## 4 - Endpoint route to get the average number of Likes and Retweets per tweet:
 
-    http://localhost:9000/average
+    http://localhost:5000/average
 
 
 ## 5 - Endpoint route to get summary stats from the tweets (3 dictionaries):
@@ -38,21 +38,21 @@ Remember, YOU (your API) are the server, and clients send GET or POST requests t
     2. Total Likes per month
     3. Total Retweets per month
 
-    http://localhost:9000/summary
+    http://localhost:5000/summary
 
 ## 6 - Endpoint route to get polarity score for one random tweet:
 
-    http://localhost:9000/sentiment/random    
+    http://localhost:5000/sentiment/random    
 
 
 ## 7 - Endpoint route to get polarity score for the top 10 most liked tweets: 
 
-    http://localhost:9000/sentiment/tweets/top10    
+    http://localhost:5000/sentiment/tweets/top10    
 
 
-## 12 - Endpoint route for posting a new tweet:
+## 8 - Endpoint route for posting a new tweet:
  
-    http://localhost:9000/post    
+    http://localhost:5000/post    
 
 
 
